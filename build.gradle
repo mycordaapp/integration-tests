@@ -1,5 +1,12 @@
 buildscript {
 
+    Properties versions = new Properties()
+    file("$projectDir/versions.properties").withInputStream { versions.load(it) }
+    ext.kotlinVersion = versions.getProperty("kotlinVersion")
+    ext.helpersVersion = versions.getProperty("helpersVersion")
+    ext.registryVersion = versions.getProperty("registryVersion")
+    ext.tasksVersion = versions.getProperty("tasksVersion")
+
     repositories {
         mavenCentral()
     }
@@ -7,6 +14,8 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.71"
     }
+
+
 }
 
 plugins {
@@ -18,8 +27,8 @@ apply plugin: 'kotlin'
 apply plugin: 'maven'
 
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
 
 //
 // Will be published to jitpack by github at:
@@ -32,6 +41,10 @@ repositories {
     mavenCentral()
     maven { url "https://repo.gradle.org/gradle/libs-releases" }
     maven { url "https://jitpack.io" }
+
+    // uncomment if testing locally. please DONT check in with
+    // mavenLocal() enabled
+    mavenLocal()
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
@@ -52,10 +65,12 @@ jar {
 
 dependencies {
     //implementation("com.github.jitpack:gradle-simple:1.0")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.71"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 
-    testImplementation("com.github.mycordaapp:registry:0.0.2")
-    testImplementation("com.github.mycordaapp.tasks:tasks:0.0.4a")
+    testImplementation("com.github.mycordaapp:helpers:$helpersVersion")
+    testImplementation("com.github.mycordaapp:registry:$registryVersion")
+    testImplementation("com.github.mycordaapp.tasks:tasks:$tasksVersion")
+    testImplementation("com.github.mycordaapp.tasks:tasks-examples:$tasksVersion")
 
     testCompile("com.natpryce:hamkrest:1.7.0.0")
     testCompile("junit:junit:4.12")
