@@ -12,7 +12,7 @@ import org.junit.Test
 /**
  * Some simple tests with the helpers
  */
-class HelpersSpec {
+class HelpersTests {
 
     @Test
     fun `should include helpers`() {

@@ -11,7 +11,7 @@ import org.junit.Test
 /**
  * Some simple tests with Tasks
  */
-class TaskSpec {
+class TaskTests {
 
     @Test
     fun `should include tasks jar`() {
